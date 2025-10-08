@@ -1,46 +1,45 @@
-/* Intro screen (tap to enter) */
-#intro-screen {
-    position: fixed;
-    inset: 0;
-    background: #000;
-    color: #ddd;
+/* Navigation Links */
+.nav-links {
+    margin-top: 1rem;
     display: flex;
+    gap: 1.5rem;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    z-index: 9999;
-    transition: opacity 1s ease;
 }
 
-#intro-screen.fade-out {
-    opacity: 0;
-    pointer-events: none;
+.nav-links a {
+    color: #ddd;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border 0.2s;
 }
 
-.intro-content h1 {
-    font-size: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+.nav-links a:hover {
+    border-bottom: 1px solid #ddd;
 }
 
-#enter-btn {
-    margin-top: 2rem;
-    padding: 1rem 2rem;
+/* Hero small for inner pages */
+.hero.small {
+    height: 40vh;
+    background: #111 url('images/owl-bg.jpg') center/cover no-repeat;
+}
+
+/* Character List */
+.character-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.character {
     background: #111;
+    padding: 1rem;
     border: 1px solid #444;
-    color: #fff;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.3s;
 }
 
-#enter-btn:hover,
-#enter-btn:active {
-    background: #333;
-    transform: scale(0.98);
-}
-
-/* Hide main until intro finishes */
-#main-content.hidden {
-    display: none;
+.character:hover {
+    transform: scale(1.05);
 }
