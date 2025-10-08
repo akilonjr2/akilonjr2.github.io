@@ -3,43 +3,56 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Court of Owls - Recruitment</title>
+    <title>Court of Owls Recruitment</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header class="hero">
-    <div class="overlay">
-        <h1>Beware the Court of Owls</h1>
-        <p>They watch you from the shadowed spires of Gotham...</p>
-        <a href="#recruit" class="btn">Join Us</a>
-    </div>
+<header class="fade">
+    <h1>Join the Court of Owls</h1>
+    <p>Beware the Talons. The Court watches all.</p>
+    <button id="music-toggle" aria-label="Toggle ambient music">🔇</button>
 </header>
 
-<section id="about" class="section">
-    <h2>Who We Are</h2>
-    <p>
-        The Court of Owls has ruled Gotham in secret for centuries. We are its true architects,
-        watching as others play at power. Few are invited. Fewer survive initiation.
-    </p>
-</section>
+<main>
+    <section class="fade">
+        <h2>About the Court</h2>
+        <p>
+            Hidden for centuries beneath Gotham’s shadow, the Court of Owls controls the city’s fate.
+            We invite only the worthy — those who see through the lies of the daylight.
+        </p>
+    </section>
 
-<section id="recruit" class="section dark">
-    <h2>Recruitment</h2>
-    <p>
-        Do you possess the cunning, discipline, and darkness required to serve the Court?
-        Submit your details, and we will find you... when the time is right.
-    </p>
-    <form id="contact-form">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <textarea placeholder="Why should the Court choose you?" required></textarea>
-        <button type="submit" class="btn">Submit</button>
-    </form>
-</section>
+    <section class="fade">
+        <h2>Requirements</h2>
+        <ul>
+            <li>Exceptional discretion.</li>
+            <li>Fearless loyalty to the Court.</li>
+            <li>Skills in observation, stealth, or persuasion.</li>
+            <li>Must never speak of the Court.</li>
+        </ul>
+    </section>
 
-<footer>
-    <p>© 2025 The Court of Owls. All rights reserved.</p>
-</footer>
+    <section class="fade">
+        <h2>Apply for Initiation</h2>
+        <form id="contact-form">
+            <label for="name">Name (alias):</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="message">Why do you wish to join?</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">Submit Application</button>
+        </form>
+    </section>
+</main>
+
+<div id="secret-message" class="hidden">
+    <p>🐦 The Court welcomes you... Hoot hoot.</p>
+</div>
+
+<audio id="ambient" loop>
+    <source src="audio/ambient.mp3" type="audio/mpeg" />
+</audio>
 
 <script src="script.js"></script>
 </body>
