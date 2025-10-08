@@ -1,170 +1,46 @@
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Mobile-friendly layout */
-html,
-body {
-    font-family: "Cinzel", serif;
-    background-color: #000;
-    color: #e0e0e0;
-    overflow-x: hidden;
-    line-height: 1.5;
-}
-
-header {
+/* Intro screen (tap to enter) */
+#intro-screen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     text-align: center;
-    padding: 4rem 1rem 2rem;
-    position: relative;
+    z-index: 9999;
+    transition: opacity 1s ease;
 }
 
-h1 {
+#intro-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-content h1 {
     font-size: 2rem;
-    color: #fff;
+    text-transform: uppercase;
     letter-spacing: 2px;
 }
 
-header p {
-    font-style: italic;
-    opacity: 0.8;
-    margin-top: 0.5rem;
-}
-
-#music-toggle {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-#music-toggle:active {
-    transform: scale(0.9);
-}
-
-/* Sections */
-main {
-    padding: 0 1rem 4rem;
-    max-width: 600px;
-    margin: auto;
-}
-
-section {
-    margin-top: 3rem;
-}
-
-section h2 {
-    text-transform: uppercase;
-    border-bottom: 1px solid #444;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    letter-spacing: 1px;
-}
-
-ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-li::before {
-    content: "🦉 ";
-}
-
-/* Form styling */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-input,
-textarea,
-button {
-    font-size: 1rem;
-    padding: 0.75rem;
-    border-radius: 5px;
-    border: none;
-    width: 100%;
-}
-
-input,
-textarea {
-    background: #111;
-    color: #eee;
-}
-
-button[type="submit"] {
-    background: #222;
-    color: #fff;
-    border: 1px solid #444;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-button[type="submit"]:hover {
-    background: #333;
-}
-
-/* Secret Message */
-#secret-message {
-    position: fixed;
-    bottom: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(30, 30, 30, 0.95);
-    border: 1px solid #444;
+#enter-btn {
+    margin-top: 2rem;
     padding: 1rem 2rem;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    animation: flicker 0.5s infinite alternate;
+    background: #111;
+    border: 1px solid #444;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
 }
 
-.hidden {
+#enter-btn:hover,
+#enter-btn:active {
+    background: #333;
+    transform: scale(0.98);
+}
+
+/* Hide main until intro finishes */
+#main-content.hidden {
     display: none;
-}
-
-/* Animations */
-.fade {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1s ease, transform 1s ease;
-}
-
-.fade.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-@keyframes flicker {
-    from {
-        opacity: 0.8;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-/* 📱 Mobile tweaks */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 1.6rem;
-    }
-
-    header {
-        padding-top: 3rem;
-    }
-
-    section h2 {
-        font-size: 1.2rem;
-    }
-
-    button[type="submit"] {
-        font-size: 1rem;
-    }
 }

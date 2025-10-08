@@ -1,87 +1,85 @@
-// =======================
-// 🦉 Court of Owls Website Script
-// =======================
+// =============
+// Intro Sequence
+// =============
+const intro = document.getElementById('intro-screen');
+const enterBtn = document.getElementById('enter-btn');
+const whisper = document.getElementById('whisper');
+const main = document.getElementById('main-content');
 
-// 📝 Contact form behavior
-document.getElementById('contact-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    alert('The Court has received your message... We are watching.');
+enterBtn.addEventListener('click', () => {
+    whisper.volume = 0.3;
+    whisper.play().catch(() => console.warn('Tap again to start audio.'));
+    intro.classList.add('fade-out');
+    setTimeout(() => {
+        intro.remove();
+        main.classList.remove('hidden');
+    }, 1200);
 });
 
-// 🌒 Fade-in scroll animations
+// =============
+// Contact Form
+// =============
+document.getElementById('contact-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('The Court has received your message...');
+});
+
+// =============
+// Fade Animations
+// =============
 const fadeEls = document.querySelectorAll('.fade');
 const fadeObserver = new IntersectionObserver(
     (entries) => {
         entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
+            if (entry.isIntersecting) entry.target.classList.add('visible');
         });
     },
     { threshold: 0.2 }
 );
 fadeEls.forEach((el) => fadeObserver.observe(el));
 
-// 🔑 Secret "OWL" Easter Egg
+// =============
+// Secret "OWL" Easter Egg
+// =============
 let sequence = '';
 document.addEventListener('keydown', (e) => {
     sequence += e.key.toUpperCase();
     if (sequence.endsWith('OWL')) {
-        const secret = document.getElementById('secret-message');
-        secret.classList.remove('hidden');
-        setTimeout(() => {
-            secret.classList.add('hidden');
-            sequence = '';
-        }, 4000);
+        const msg = document.getElementById('secret-message');
+        msg.classList.remove('hidden');
+        setTimeout(() => msg.classList.add('hidden'), 4000);
+        sequence = '';
     }
     if (sequence.length > 3) sequence = sequence.slice(-3);
 });
 
-// 🔊 Ambient Music Controls with Fade-in/out
+// =============
+// Ambient Audio Toggle
+// =============
 const audio = document.getElementById('ambient');
 const toggle = document.getElementById('music-toggle');
-let musicPlaying = false;
+let playing = false;
 
-// Smooth fade-in/out helpers
-function fadeIn(audioElement, duration = 3000) {
-    audioElement.volume = 0;
-    const playPromise = audioElement.play();
-    if (playPromise !== undefined) {
-        playPromise.catch(() => console.warn('Tap 🔇 to start audio.'));
-    }
-    const step = 50;
-    const volumeIncrement = 1 / (duration / step);
+function fadeIn(a, d = 3000) {
+    a.volume = 0;
+    a.play().catch(() => console.warn('Tap 🔇 to start audio.'));
+    const step = 50, inc = 1 / (d / step);
     const fade = setInterval(() => {
-        if (audioElement.volume < 1 - volumeIncrement) {
-            audioElement.volume += volumeIncrement;
-        } else {
-            audioElement.volume = 1;
-            clearInterval(fade);
-        }
+        if (a.volume < 1 - inc) a.volume += inc;
+        else { a.volume = 1; clearInterval(fade); }
     }, step);
 }
 
-function fadeOut(audioElement, duration = 1000) {
-    const step = 50;
-    const volumeDecrement = audioElement.volume / (duration / step);
+function fadeOut(a, d = 1000) {
+    const step = 50, dec = a.volume / (d / step);
     const fade = setInterval(() => {
-        if (audioElement.volume > volumeDecrement) {
-            audioElement.volume -= volumeDecrement;
-        } else {
-            audioElement.volume = 0;
-            audioElement.pause();
-            clearInterval(fade);
-        }
+        if (a.volume > dec) a.volume -= dec;
+        else { a.volume = 0; a.pause(); clearInterval(fade); }
     }, step);
 }
 
 toggle.addEventListener('click', () => {
-    if (musicPlaying) {
-        fadeOut(audio, 1000);
-        toggle.textContent = '🔇';
-    } else {
-        fadeIn(audio, 3000);
-        toggle.textContent = '🔊';
-    }
-    musicPlaying = !musicPlaying;
+    if (playing) { fadeOut(audio, 1000); toggle.textContent = '🔇'; }
+    else { fadeIn(audio, 3000); toggle.textContent = '🔊'; }
+    playing = !playing;
 });
