@@ -1,4 +1,12 @@
-/* Intro screen (tap to enter) */
+body {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    background: #000;
+    color: #ccc;
+    overflow-x: hidden;
+}
+
+/* Intro Screen */
 #intro-screen {
     position: fixed;
     inset: 0;
@@ -12,18 +20,7 @@
     z-index: 9999;
     transition: opacity 1s ease;
 }
-
-#intro-screen.fade-out {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.intro-content h1 {
-    font-size: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
+#intro-screen.fade-out { opacity: 0; pointer-events: none; }
 #enter-btn {
     margin-top: 2rem;
     padding: 1rem 2rem;
@@ -33,14 +30,68 @@
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
 }
+#enter-btn:hover { background: #333; transform: scale(0.98); }
+#main-content.hidden { display: none; }
 
-#enter-btn:hover,
-#enter-btn:active {
-    background: #333;
-    transform: scale(0.98);
+/* Section styling */
+.section {
+    padding: 4rem 2rem;
+    text-align: center;
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    opacity: 0;
+    transform: translateY(40px);
+}
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.section.dark {
+    background: #111;
+    color: #ddd;
 }
 
-/* Hide main until intro finishes */
-#main-content.hidden {
-    display: none;
+/* Buttons */
+.btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background: #111;
+    color: #fff;
+    border: 1px solid #555;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+.btn:hover { background: #333; }
+
+/* Gallery */
+.gallery {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.gallery img {
+    width: 200px;
+    height: auto;
+    border: 2px solid #333;
+    transition: transform 0.3s;
+}
+.gallery img:hover { transform: scale(1.05); }
+
+/* Secret Message */
+#secret-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(20, 20, 20, 0.9);
+    padding: 1rem 1.5rem;
+    border: 1px solid #555;
+    border-radius: 8px;
+    animation: fadeInOut 4s ease;
+}
+.hidden { display: none; }
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    10%, 90% { opacity: 1; }
 }

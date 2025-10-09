@@ -1,8 +1,20 @@
-document.getElementById('contact-form')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('The Court has received your message...');
+// Intro Screen
+const intro = document.getElementById('intro-screen');
+const enterBtn = document.getElementById('enter-btn');
+const whisper = document.getElementById('whisper');
+const main = document.getElementById('main-content');
+
+enterBtn.addEventListener('click', () => {
+    whisper.volume = 0.3;
+    whisper.play().catch(() => console.warn('Tap again to start audio.'));
+    intro.classList.add('fade-out');
+    setTimeout(() => {
+        intro.remove();
+        main.classList.remove('hidden');
+    }, 1200);
 });
 
+// Fade-in sections
 const fadeEls = document.querySelectorAll('.fade');
 const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -11,6 +23,7 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.2 });
 fadeEls.forEach((el) => fadeObserver.observe(el));
 
+// Secret Easter Egg (Type OWL)
 let sequence = '';
 document.addEventListener('keydown', (e) => {
     sequence += e.key.toUpperCase();
@@ -23,6 +36,7 @@ document.addEventListener('keydown', (e) => {
     if (sequence.length > 3) sequence = sequence.slice(-3);
 });
 
+// Ambient Audio Controls
 const audio = document.getElementById('ambient');
 const toggle = document.getElementById('music-toggle');
 let playing = false;
@@ -43,45 +57,27 @@ function fadeOut(a, d = 1000) {
         else { a.volume = 0; a.pause(); clearInterval(fade); }
     }, step);
 }
-
 toggle.addEventListener('click', () => {
-    if (playing) { fadeOut(audio, 1000); toggle.textContent = '🔇'; }
-    else { fadeIn(audio, 3000); toggle.textContent = '🔊'; }
+    if (playing) { fadeOut(audio); toggle.textContent = '🔇'; }
+    else { fadeIn(audio); toggle.textContent = '🔊'; }
     playing = !playing;
 });
 
-
-// =============
-// Intro Sequence
-// =============
-const intro = document.getElementById('intro-screen');
-const enterBtn = document.getElementById('enter-btn');
-const whisper = document.getElementById('whisper');
-const main = document.getElementById('main-content');
-
-enterBtn.addEventListener('click', () => {
-    whisper.volume = 0.3;
-    whisper.play().catch(() => console.warn('Tap again to start audio.'));
-    intro.classList.add('fade-out');
-    setTimeout(() => {
-        intro.remove();
-        main.classList.remove('hidden');
-    }, 1200);
-});
-
-// =============
-// Contact Form
-// =============
-document.getElementById('contact-form')?.addEventListener('submit', (e) => {
+// Form Submission with Feedback
+const form = document.getElementById('contact-form');
+form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    alert('The Court has received your message...');
-});
+    const formData = new FormData(form);
+    const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { Accept: 'application/json' },
+    });
 
-fadeEls.forEach((el) => fadeObserver.observe(el));
-
-
-toggle.addEventListener('click', () => {
-    if (playing) { fadeOut(audio, 1000); toggle.textContent = '🔇'; }
-    else { fadeIn(audio, 3000); toggle.textContent = '🔊'; }
-    playing = !playing;
+    if (response.ok) {
+        alert('🦉 The Court has received your message...');
+        form.reset();
+    } else {
+        alert('Something went wrong. The Owls are displeased.');
+    }
 });

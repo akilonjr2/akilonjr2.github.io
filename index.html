@@ -69,15 +69,15 @@
             Do you possess the cunning and darkness required to serve the Court?
             Submit your details, and we will find you... when the time is right.
         </p>
-        <form id="contact-form">
+        <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
             <label>
-                <input type="text" placeholder="Your Name" required />
+                <input type="text" name="name" placeholder="Your Name" required />
             </label>
             <label>
-                <input type="email" placeholder="Your Email" required />
+                <input type="email" name="email" placeholder="Your Email" required />
             </label>
             <label>
-                <textarea placeholder="Why should the Court choose you?" required></textarea>
+                <textarea name="message" placeholder="Why should the Court choose you?" required></textarea>
             </label>
             <button type="submit" class="btn">Submit</button>
         </form>
