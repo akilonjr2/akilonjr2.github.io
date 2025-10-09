@@ -20,7 +20,12 @@ body {
     z-index: 9999;
     transition: opacity 1s ease;
 }
-#intro-screen.fade-out { opacity: 0; pointer-events: none; }
+
+#intro-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
 #enter-btn {
     margin-top: 2rem;
     padding: 1rem 2rem;
@@ -31,9 +36,40 @@ body {
     transition: background 0.3s, transform 0.2s;
 }
 #enter-btn:hover { background: #333; transform: scale(0.98); }
-#main-content.hidden { display: none; }
 
-/* Section styling */
+#main-content.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+#main-content {
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+
+/* Hero */
+.hero {
+    position: relative;
+    background: url('images/emblem.jpg') center/cover no-repeat;
+    color: #fff;
+    text-align: center;
+    padding: 5rem 1rem;
+}
+.hero.small { padding: 3rem 1rem; }
+.hero .overlay {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2rem;
+}
+.nav-links a {
+    color: #ccc;
+    margin: 0 0.75rem;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+}
+.nav-links a:hover {
+    border-color: #ccc;
+}
+
+/* Sections */
 .section {
     padding: 4rem 2rem;
     text-align: center;
@@ -50,19 +86,6 @@ body {
     color: #ddd;
 }
 
-/* Buttons */
-.btn {
-    display: inline-block;
-    margin-top: 1.5rem;
-    padding: 0.75rem 1.5rem;
-    background: #111;
-    color: #fff;
-    border: 1px solid #555;
-    text-decoration: none;
-    transition: background 0.3s;
-}
-.btn:hover { background: #333; }
-
 /* Gallery */
 .gallery {
     display: flex;
@@ -78,20 +101,32 @@ body {
 }
 .gallery img:hover { transform: scale(1.05); }
 
-/* Secret Message */
-#secret-message {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(20, 20, 20, 0.9);
-    padding: 1rem 1.5rem;
+/* Buttons */
+.btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background: #111;
+    color: #fff;
     border: 1px solid #555;
-    border-radius: 8px;
-    animation: fadeInOut 4s ease;
+    text-decoration: none;
+    transition: background 0.3s;
 }
-.hidden { display: none; }
+.btn:hover { background: #333; }
 
-@keyframes fadeInOut {
-    0%, 100% { opacity: 0; }
-    10%, 90% { opacity: 1; }
+/* Timeline */
+.timeline .event {
+    margin: 1rem 0;
+}
+.timeline .year {
+    font-weight: bold;
+    color: #999;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: #111;
+    color: #666;
 }

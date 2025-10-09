@@ -1,20 +1,24 @@
-// Intro Screen
+// ===== Intro Screen =====
 const intro = document.getElementById('intro-screen');
 const enterBtn = document.getElementById('enter-btn');
 const whisper = document.getElementById('whisper');
 const main = document.getElementById('main-content');
 
-enterBtn.addEventListener('click', () => {
-    whisper.volume = 0.3;
-    whisper.play().catch(() => console.warn('Tap again to start audio.'));
-    intro.classList.add('fade-out');
-    setTimeout(() => {
-        intro.remove();
-        main.classList.remove('hidden');
-    }, 1200);
-});
+if (enterBtn) {
+    enterBtn.addEventListener('click', () => {
+        whisper.volume = 0.3;
+        whisper.play().catch(() => console.warn('Tap again to start audio.'));
+        intro.classList.add('fade-out');
+        setTimeout(() => {
+            intro.remove();
+            main.classList.remove('hidden');
+            main.style.opacity = '1';
+            main.style.visibility = 'visible';
+        }, 1200);
+    });
+}
 
-// Fade-in sections
+// ===== Fade-in sections =====
 const fadeEls = document.querySelectorAll('.fade');
 const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -23,20 +27,7 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.2 });
 fadeEls.forEach((el) => fadeObserver.observe(el));
 
-// Secret Easter Egg (Type OWL)
-let sequence = '';
-document.addEventListener('keydown', (e) => {
-    sequence += e.key.toUpperCase();
-    if (sequence.endsWith('OWL')) {
-        const msg = document.getElementById('secret-message');
-        msg.classList.remove('hidden');
-        setTimeout(() => msg.classList.add('hidden'), 4000);
-        sequence = '';
-    }
-    if (sequence.length > 3) sequence = sequence.slice(-3);
-});
-
-// Ambient Audio Controls
+// ===== Audio Controls =====
 const audio = document.getElementById('ambient');
 const toggle = document.getElementById('music-toggle');
 let playing = false;
@@ -50,6 +41,7 @@ function fadeIn(a, d = 3000) {
         else { a.volume = 1; clearInterval(fade); }
     }, step);
 }
+
 function fadeOut(a, d = 1000) {
     const step = 50, dec = a.volume / (d / step);
     const fade = setInterval(() => {
@@ -57,16 +49,22 @@ function fadeOut(a, d = 1000) {
         else { a.volume = 0; a.pause(); clearInterval(fade); }
     }, step);
 }
-toggle.addEventListener('click', () => {
-    if (playing) { fadeOut(audio); toggle.textContent = '🔇'; }
-    else { fadeIn(audio); toggle.textContent = '🔊'; }
-    playing = !playing;
-});
 
-// Form Submission with Feedback
+if (toggle) {
+    toggle.addEventListener('click', () => {
+        if (playing) { fadeOut(audio); toggle.textContent = '🔇'; }
+        else { fadeIn(audio); toggle.textContent = '🔊'; }
+        playing = !playing;
+    });
+}
+
+// ===== Form Submission (Spam Protected) =====
 const form = document.getElementById('contact-form');
 form?.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const honey = (form.querySelector('input[name="_honey"]')).value;
+    if (honey) return; // bot detected
+
     const formData = new FormData(form);
     const response = await fetch(form.action, {
         method: form.method,
