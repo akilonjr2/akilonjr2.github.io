@@ -11,7 +11,7 @@
     <div class="overlay">
         <h1>Recruitment</h1>
         <nav class="nav-links">
-            <a href="index.html">Home</a>
+            <a href="index.html" class="home-link">Home</a>
             <a href="history.html">History</a>
             <a href="artifacts.html">Artifacts</a>
         </nav>
@@ -20,16 +20,30 @@
 
 <section id="recruit" class="section fade visible">
     <h2>Join the Court</h2>
-    <p>Do you possess the cunning and darkness required to serve the Court???</p>
+    <p class="intro-text">
+        Do you possess the cunning, silence, and shadow that the Court requires?
+        Only those unseen by daylight may earn our mark.
+    </p>
 
-    <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <!-- Honeypot field (spam protection) -->
+    <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
 
-        <label><input type="text" name="name" placeholder="Your Name" required /></label>
-        <label><input type="email" name="email" placeholder="Your Email" required /></label>
-        <label><textarea name="message" placeholder="Why should the Court choose you?" required></textarea></label>
-        <button type="submit" class="btn">Submit</button>
+        <div class="form-group">
+            <label for="name">Alias</label>
+            <input type="text" id="name" name="name" placeholder="Your chosen name" required />
+        </div>
+
+        <div class="form-group">
+            <label for="email">Encrypted Contact</label>
+            <input type="email" id="email" name="email" placeholder="you@shadowmail.com" required />
+        </div>
+
+        <div class="form-group">
+            <label for="message">Your Intent</label>
+            <textarea id="message" name="message" placeholder="Why should the Court choose you?" required></textarea>
+        </div>
+
+        <button type="submit" class="btn">Submit to the Shadows</button>
     </form>
 </section>
 
