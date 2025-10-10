@@ -13,6 +13,22 @@ if (smokeContainer) {
     }
 }
 
+// === INTRO SCREEN LOGIC ===
+const introScreen = document.getElementById('intro-screen');
+const enterBtn = document.getElementById('enter-btn');
+const mainContent = document.getElementById('main-content');
+
+if (enterBtn && introScreen && mainContent) {
+    enterBtn.addEventListener('click', () => {
+        introScreen.classList.add('fade-out');
+        setTimeout(() => {
+            introScreen.remove();
+            mainContent.classList.remove('hidden');
+        }, 1000); // matches CSS fade duration
+    });
+}
+
+
 // === VISUAL FADE-IN ===
 document.querySelectorAll('.fade').forEach((el) => {
     const obs = new IntersectionObserver((entries) => {

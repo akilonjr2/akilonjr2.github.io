@@ -13,11 +13,37 @@ body {
     overflow-x: hidden;
 }
 
+/* Intro Screen */
+#intro-screen {
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: white;
+    font-family: 'Cinzel', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 999;
+    transition: opacity 1s ease;
+}
+
+#intro-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Hide main content initially */
+.hidden {
+    display: none;
+}
+
+
 /* === HERO SECTION === */
 .hero {
     position: relative;
     overflow: hidden;
-    background: url('images/emblem.jpg') center/cover no-repeat;
     color: #fff;
     text-align: center;
     padding: 4rem 1rem;
