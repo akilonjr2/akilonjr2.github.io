@@ -5,33 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Recruitment - The Court of Owls</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Raleway:wght@300;500&display=swap" rel="stylesheet">
 </head>
 <body>
 <header class="hero small">
+    <div id="smoke-bg"></div>
     <div class="overlay">
         <h1>Recruitment</h1>
         <nav class="nav-links">
             <a href="index.html">Home</a>
-            <a href="https://batman.fandom.com/wiki/Court_of_Owls#History">History</a>
-            <a href="https://comicvine.gamespot.com/court-of-owls/4060-58693/characters/">Artifacts</a>
+            <a href="https://batman.fandom.com/wiki/Court_of_Owls">History</a>
+            <a href="https://comicvine.gamespot.com/court-of-owls/4060-58693/characters/">Notable Members</a>
         </nav>
     </div>
 </header>
 
-<section id="recruit" class="section fade visible">
-    <h2>Join the Court</h2>
-    <p>Do you possess the cunning and darkness required to serve the Court?</p>
+<main id="main-content" class="fade visible">
+    <section id="recruit" class="section dark">
+        <h2>Join the Court</h2>
+        <p class="lead">
+            Only those who walk the shadows with purpose may serve the Court.
+            Reveal your loyalty, and you may yet earn your mask.
+        </p>
 
-    <form id="contact-form" action="https://formspree.io/f/mpwyyawb" method="POST">
-        <!-- Honeypot field (spam protection) -->
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+        <form id="contact-form" action="https://formspree.io/f/mpwyyawb" method="POST">
+            <!-- Honeypot field -->
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
 
-        <label><input type="text" name="name" placeholder="Your Name" required /></label>
-        <label><input type="email" name="email" placeholder="Your Email" required /></label>
-        <label><textarea name="message" placeholder="Why should the Court choose you?" required></textarea></label>
-        <button type="submit" class="btn">Submit</button>
-    </form>
-</section>
+            <div class="form-grid">
+                <label>
+                    <span>Name</span>
+                    <input type="text" name="name" placeholder="Your Name" required />
+                </label>
+                <label>
+                    <span>Email</span>
+                    <input type="email" name="email" placeholder="Your Email" required />
+                </label>
+            </div>
+
+            <label class="full">
+                <span>Your Message</span>
+                <textarea name="message" placeholder="Why should the Court choose you?" required></textarea>
+            </label>
+
+            <input type="hidden" name="timestamp" id="timestamp" />
+
+            <button type="submit" class="btn">Submit</button>
+            <p id="submission-note" class="note hidden">
+                Your application has been recorded in the archives of the Court.
+            </p>
+        </form>
+    </section>
+
+    <section class="section">
+        <h2>What Awaits You</h2>
+        <div class="benefits">
+            <div class="benefit">
+                <h3>Eternal Legacy</h3>
+                <p>Become part of Gotham’s hidden history, shaping its fate from the shadows.</p>
+            </div>
+            <div class="benefit">
+                <h3>Power in Silence</h3>
+                <p>Rule unseen. Command respect and fear without uttering a single word.</p>
+            </div>
+            <div class="benefit">
+                <h3>Brotherhood of Masks</h3>
+                <p>Join an ancient order sworn to secrecy, bound by loyalty and purpose.</p>
+            </div>
+        </div>
+    </section>
+</main>
 
 <footer>
     <p>© 2025 The Court of Owls. All rights reserved.</p>
