@@ -24,18 +24,31 @@ if (enterBtn && introScreen && mainContent) {
         setTimeout(() => {
             introScreen.remove();
             mainContent.classList.remove('hidden');
+
+            // Make sections visible immediately if already in viewport
+            document.querySelectorAll('.section').forEach((section) => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight) section.classList.add('visible');
+            });
         }, 1000);
     });
 }
 
-// === VISUAL FADE-IN ===
-document.querySelectorAll('.fade').forEach((el) => {
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-    }, { threshold: 0.2 });
-    obs.observe(el);
+// === SECTIONS FADE-IN ===
+document.querySelectorAll('.section').forEach((section) => {
+    const observer = new IntersectionObserver(
+        (entries, obs) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    obs.unobserve(entry.target); // animate once
+                }
+            });
+        },
+        { threshold: 0.2 }
+    );
+
+    observer.observe(section);
 });
 
 // === FORM LOGIC ===
@@ -53,7 +66,7 @@ if (form) {
     if (lastSubmission && now - parseInt(lastSubmission, 10) < 86400000) {
         form.classList.add('disabled');
         submitBtn.disabled = true;
-        submitBtn.textContent = '🦉 Application Received';
+        submitBtn.textContent = ' Application Received';
         if (alreadyMsg) alreadyMsg.classList.remove('hidden');
         note.classList.remove('hidden');
         note.classList.add('visible');
@@ -72,7 +85,7 @@ if (form) {
             return;
         }
 
-        const confirmed = confirm('⚠️ Your application will be permanently recorded in the archives of the Court. Do you wish to proceed?');
+        const confirmed = confirm('Your application will be permanently recorded in the archives of the Court. Do you wish to proceed?');
         if (!confirmed) return;
 
         const formData = new FormData(form);
