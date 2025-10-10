@@ -13,7 +13,7 @@ if (smokeContainer) {
     }
 }
 
-// === INTRO SCREEN LOGIC ===
+// === INTRO SCREEN ===
 const introScreen = document.getElementById('intro-screen');
 const enterBtn = document.getElementById('enter-btn');
 const mainContent = document.getElementById('main-content');
@@ -24,10 +24,9 @@ if (enterBtn && introScreen && mainContent) {
         setTimeout(() => {
             introScreen.remove();
             mainContent.classList.remove('hidden');
-        }, 1000); // matches CSS fade duration
+        }, 1000);
     });
 }
-
 
 // === VISUAL FADE-IN ===
 document.querySelectorAll('.fade').forEach((el) => {
@@ -51,7 +50,6 @@ if (form) {
     const lastSubmission = localStorage.getItem('courtSubmissionTime');
     const now = Date.now();
 
-    // If submitted within the last 24 hours, disable further submissions
     if (lastSubmission && now - parseInt(lastSubmission, 10) < 86400000) {
         form.classList.add('disabled');
         submitBtn.disabled = true;
@@ -66,30 +64,20 @@ if (form) {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (form.classList.contains('disabled')) return;
-        if (honey && honey.value) return; // spam bot caught
+        if (honey && honey.value) return;
 
-        // Require a delay between page load and submission to block bots
         const delta = Date.now() - parseInt(timestampField.value, 10);
         if (delta < 3000) {
             alert('Too swift, intruder. The Court sees through you.');
             return;
         }
 
-        // Confirmation step
-        const confirmed = confirm(
-            '⚠️ Your application will be permanently recorded in the archives of the Court. Do you wish to proceed?'
-        );
+        const confirmed = confirm('⚠️ Your application will be permanently recorded in the archives of the Court. Do you wish to proceed?');
         if (!confirmed) return;
 
-        // Submit to Formspree
         const formData = new FormData(form);
         try {
-            const res = await fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: { Accept: 'application/json' },
-            });
-
+            const res = await fetch(form.action, { method: 'POST', body: formData, headers: { Accept: 'application/json' } });
             if (res.ok) {
                 localStorage.setItem('courtSubmissionTime', Date.now().toString());
                 submitBtn.disabled = true;
@@ -97,9 +85,7 @@ if (form) {
                 note.classList.remove('hidden');
                 setTimeout(() => note.classList.add('visible'), 100);
                 form.classList.add('disabled');
-            } else {
-                alert('The Owls are displeased. Try again.');
-            }
+            } else alert('The Owls are displeased. Try again.');
         } catch {
             alert('A dark force has disrupted your submission. Try again later.');
         }
