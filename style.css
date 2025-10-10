@@ -124,10 +124,6 @@ body {
     opacity: 1;
     transform: translateY(0);
 }
-.section.dark {
-    background: #111;
-    color: #ddd;
-}
 .lead {
     font-size: 1.2rem;
     max-width: 700px;
