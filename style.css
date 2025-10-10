@@ -13,6 +13,10 @@ body {
     overflow-x: hidden;
 }
 
+h2 {
+    text-align: center;
+}
+
 /* === INTRO SCREEN === */
 #intro-screen {
     position: fixed;
