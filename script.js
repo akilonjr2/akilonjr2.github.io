@@ -30,15 +30,17 @@ if (form) {
     const timestampField = form.querySelector('#timestamp');
     const note = document.getElementById('submission-note');
     const submitBtn = form.querySelector('button');
+    const alreadyMsg = document.getElementById('already-submitted');
 
     const lastSubmission = localStorage.getItem('courtSubmissionTime');
     const now = Date.now();
 
-    // If submitted within 24 hours
+    // If submitted within the last 24 hours, disable further submissions
     if (lastSubmission && now - parseInt(lastSubmission, 10) < 86400000) {
         form.classList.add('disabled');
         submitBtn.disabled = true;
         submitBtn.textContent = '🦉 Application Received';
+        if (alreadyMsg) alreadyMsg.classList.remove('hidden');
         note.classList.remove('hidden');
         note.classList.add('visible');
     }
@@ -48,31 +50,42 @@ if (form) {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (form.classList.contains('disabled')) return;
+        if (honey && honey.value) return; // spam bot caught
 
-        if (honey && honey.value) return; // spam check
-
+        // Require a delay between page load and submission to block bots
         const delta = Date.now() - parseInt(timestampField.value, 10);
         if (delta < 3000) {
-            alert('🦉 Too swift, intruder. The Court sees through you.');
+            alert('Too swift, intruder. The Court sees through you.');
             return;
         }
 
-        const formData = new FormData(form);
-        const res = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: { Accept: 'application/json' },
-        });
+        // Confirmation step
+        const confirmed = confirm(
+            '⚠️ Your application will be permanently recorded in the archives of the Court. Do you wish to proceed?'
+        );
+        if (!confirmed) return;
 
-        if (res.ok) {
-            localStorage.setItem('courtSubmissionTime', Date.now().toString());
-            submitBtn.disabled = true;
-            submitBtn.textContent = '🦉 Application Received';
-            note.classList.remove('hidden');
-            setTimeout(() => note.classList.add('visible'), 100);
-            form.classList.add('disabled');
-        } else {
-            alert('The Owls are displeased. Try again.');
+        // Submit to Formspree
+        const formData = new FormData(form);
+        try {
+            const res = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { Accept: 'application/json' },
+            });
+
+            if (res.ok) {
+                localStorage.setItem('courtSubmissionTime', Date.now().toString());
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Application Received';
+                note.classList.remove('hidden');
+                setTimeout(() => note.classList.add('visible'), 100);
+                form.classList.add('disabled');
+            } else {
+                alert('The Owls are displeased. Try again.');
+            }
+        } catch {
+            alert('A dark force has disrupted your submission. Try again later.');
         }
     });
 }
